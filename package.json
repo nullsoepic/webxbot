@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  },
+  "name": "webxbot",
+  "version": "1.0.0",
+  "description": "WebX Registar Bot",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "bun run src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  }
+}
