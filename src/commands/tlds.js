@@ -1,11 +1,15 @@
-import type { ChatInputCommandInteraction } from "discord.js";
-import { SlashCommandBuilder } from "discord.js";
+import { Client, SlashCommandBuilder } from "discord.js";
 
 export default {
   data: new SlashCommandBuilder()
     .setName('tlds')
     .setDescription('List available TLDs'),
-  async execute(interaction: ChatInputCommandInteraction) {
+    /**
+     * 
+     * @param {Client} interaction 
+     * @returns 
+     */
+  async execute(interaction) {
     await interaction.deferReply()
     let tlds = await fetch('https://api.buss.lol/tlds', {
       method: 'GET',

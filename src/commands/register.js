@@ -1,6 +1,5 @@
-import type { ChatInputCommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from "discord.js";
-import { tldChoices } from "../lib";
+import { checkLimit, tldChoices, updateLimit } from "../lib";
 
 export default {
   data: new SlashCommandBuilder()
@@ -22,11 +21,18 @@ export default {
         .setDescription('IP/Domain/Github Repository')
         .setRequired(true)
     ),
-  async execute(interaction: ChatInputCommandInteraction) {
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} interaction 
+     * @returns 
+     */
+  async execute(interaction) {
     await interaction.deferReply()
-    const name = interaction.options.getString('name')!;
-    const tld = interaction.options.getString('tld')!;
-    const ip = interaction.options.getString('ip')!;
+    const name = interaction.options.getString('name');
+    const tld = interaction.options.getString('tld');
+    const ip = interaction.options.getString('ip');
+
+    if(checkLimit(interaction.user.id)) return interaction.editReply('Could not create the domain. You have reached the maximum number of domains allowed.');
 
     const response = await fetch(`https://api.buss.lol/domainapi/${process.env.API_KEY}`, {
       method: 'POST',
@@ -43,8 +49,7 @@ export default {
       return interaction.editReply('An error occurred while registering the domain. Please try again later.');
     })
 
-    // Increment the user's domain count
-    // domainCounts.set(authorr.id, userDomainCount + 1);
+    updateLimit(interaction.user.id)
 
     const userText = `Your domain has been registered with the following details:\n\nName: ${name}\nTLD: ${tld}\nIP: ${ip}\nSecret Key: ${response.secret_key}`
     await interaction.user.send(userText);

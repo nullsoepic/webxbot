@@ -1,5 +1,4 @@
-import type { ChatInputCommandInteraction } from "discord.js";
-import { SlashCommandBuilder } from "discord.js";
+import { Client, SlashCommandBuilder } from "discord.js";
 import { tldChoices } from "../lib";
 
 export default {
@@ -17,9 +16,14 @@ export default {
         .addChoices(...tldChoices())
         .setRequired(true)
     ),
-  async execute(interaction: ChatInputCommandInteraction) {
-    let name = interaction.options.getString('name')!;
-    let tld = interaction.options.getString('tld')!;
+    /**
+     * 
+     * @param {Client} interaction 
+     * @returns 
+     */
+  async execute(interaction) {
+    let name = interaction.options.getString('name');
+    let tld = interaction.options.getString('tld');
 
     await interaction.deferReply()
     let tlds = await fetch(`https://api.buss.lol/domain/${name}/${tld}`, {

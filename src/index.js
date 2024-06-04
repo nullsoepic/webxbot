@@ -3,19 +3,10 @@ import {
   Collection,
   GatewayIntentBits as Intents,
 } from "discord.js";
-import type { SlashCommandBuilder } from 'discord.js'
 import fs from "fs";
 
-export type Command = {
-  data: SlashCommandBuilder;
-  execute: (...args: any[]) => any;
-}
 
-export interface ExpandedClient extends Client<boolean> {
-  commands?: Collection<string, Command>;
-}
-
-const client: ExpandedClient = new Client({
+const client = new Client({
   intents: [Intents.DirectMessages],
 });
 

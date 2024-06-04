@@ -1,10 +1,13 @@
-import { Events } from "discord.js";
-import { ExpandedClient } from "..";
+import { Client, Events } from "discord.js";
 
 export default {
   name: Events.ClientReady,
   once: true,
-  async execute(client: ExpandedClient) {
+  /**
+   * 
+   * @param {Client} client 
+   */
+  async execute(client) {
     console.log(`Connected to Gateway (${client.user?.username})`);
 
     // const guild = await client.guilds.fetch('GUILD_ID_HERE');
