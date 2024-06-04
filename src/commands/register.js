@@ -49,7 +49,7 @@ export default {
       return interaction.editReply('An error occurred while registering the domain. Please try again later.');
     })
 
-    updateLimit(interaction.user.id)
+    updateLimit(interaction.user.id, interaction.user.username, tld);
 
     const userText = `Your domain has been registered with the following details:\n\nName: ${name}\nTLD: ${tld}\nIP: ${ip}\nSecret Key: ${response.secret_key}`
     await interaction.user.send(userText);
